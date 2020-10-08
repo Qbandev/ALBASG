@@ -400,7 +400,7 @@ Resources:
             /var/www/html/index.html:
               content: !Join
                 - ''
-                - - '<h1> Test stack: ${AWS::StackName} successfully launched!</h1>'
+                - - '<h1> Test stack was successfully launched!</h1>'
                   - '<p>Version: 1.0</p>'
               mode: '000644'
               owner: root
