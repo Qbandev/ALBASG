@@ -22,7 +22,7 @@ pipeline {
         }           
         stage('Deploy template') {
             steps {
-                cfnCreateChangeSet(stack:"${StackName}", changeSet:"${EnvType}", file:"${WORKSPACE}/code/ALBASG/ALBAutoScaling.yaml", params:["InstanceType=${InstanceType}", "KeyName=${SSHKey}", "Stackname=${StackName}", "SSHLocation=${SSHLocation}", "EnvType=${EnvType}"], tags:["Name=${StackName}", "Environment=${EnvType}"], pollInterval:1000)
+                cfnCreateChangeSet(stack:"${StackName}", changeSet:"${EnvType}", file:"${WORKSPACE}/code/ALBASG/ALBAutoScaling.yaml", params:["InstanceType=${InstanceType}", "KeyName=${SSHKey}", "StackName=${StackName}", "SSHLocation=${SSHLocation}", "EnvType=${EnvType}"], tags:["Name=${StackName}", "Environment=${EnvType}"], pollInterval:1000)
                 cfnExecuteChangeSet(stack:"${StackName}", changeSet:"${EnvType}", pollInterval:1000)
             }
         }
