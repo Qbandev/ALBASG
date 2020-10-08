@@ -8,21 +8,14 @@ pipeline {
     }
 
     stages {
-        stage('Download template') {
-            steps {
-                dir('code') {
-                    sh "git clone https://github.com/Qbandev/ALBASG.git"
-                }
-            }
-        }
         stage('Validate template') {
             steps {
-                cfnValidate(file:"${WORKSPACE}/code/ALBASG/ALBAutoScaling.yaml")
+                cfnValidate(file:"${WORKSPACE}/ALBASG/ALBAutoScaling.yaml")
             }
         }           
         stage('Deploy template') {
             steps {
-                cfnCreateChangeSet(stack:"${StackName}", changeSet:"${EnvType}", file:"${WORKSPACE}/code/ALBASG/ALBAutoScaling.yaml", params:["InstanceType=${InstanceType}", "KeyName=${SSHKey}", "StackName=${StackName}", "SSHLocation=${SSHLocation}", "EnvType=${EnvType}"], tags:["Name=${StackName}", "Environment=${EnvType}"], pollInterval:1000)
+                cfnCreateChangeSet(stack:"${StackName}", changeSet:"${EnvType}", file:"${WORKSPACE}/ALBASG/ALBAutoScaling.yaml", params:["InstanceType=${InstanceType}", "KeyName=${SSHKey}", "StackName=${StackName}", "SSHLocation=${SSHLocation}", "EnvType=${EnvType}"], tags:["Name=${StackName}", "Environment=${EnvType}"], pollInterval:1000)
                 cfnExecuteChangeSet(stack:"${StackName}", changeSet:"${EnvType}", pollInterval:1000)
             }
         }
